@@ -62,17 +62,20 @@ class Matrix:
 		return self.__data
 
 	# TODO: Accès à un élément en lecture
-	def TODO(TODO):
+	def __getitem__(self, indexes):
 		"""
 		Indexation rangée-major
 
 		:param indexes: Les index en `tuple` (rangée, colonne)
 		"""
+
 		self._check_indexes(indexes)
+		index = indexes[0]*self.width + indexes[1]
 		# TODO: Retourner la valeur
+		return self.data[index]
 
 	# TODO: Affectation à un élément
-	def TODO(TODO):
+	def __setitem__(self, indexes, value):
 		"""
 		Indexation rangée-major
 
@@ -80,6 +83,9 @@ class Matrix:
 		"""
 		self._check_indexes(indexes)
 		# TODO: L'affectation
+		index = indexes[0]*self.width + indexes[1]
+		self.data[index] = value
+
 
 	def __len__(self):
 		"""
@@ -88,9 +94,17 @@ class Matrix:
 		return self.height * self.width
 
 	# TODO: Représentation affichable (conversion pour print)
-	def TODO(TODO):
+	def __str__(self):
 		# TODO: Chaque rangée est sur une ligne, avec chaque élément séparé d'un espace.
-		pass
+		n=0
+		for i in range(len(self)):
+			if (i % self.width) == 0:
+				self.data.insert(i+n, "\n")
+				n+=1
+
+		matrix = " ".join(map(str, self.data))
+
+		return matrix
 
 	# TODO: Représentation officielle
 	def TODO(TODO):
@@ -164,5 +178,3 @@ class Matrix:
 	# TODO: Égalité entre deux matrices
 
 	# TODO: Méthode de classe identity qui crée une matrice identité
-	
-
