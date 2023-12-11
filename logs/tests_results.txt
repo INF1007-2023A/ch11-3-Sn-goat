@@ -1,0 +1,28 @@
+test_add_valid (__main__.TestMatrix.test_add_valid) ... FAIL
+test_get_valid (__main__.TestMatrix.test_get_valid) ... ok
+test_init_invalid (__main__.TestMatrix.test_init_invalid) ... ok
+test_init_valid (__main__.TestMatrix.test_init_valid) ... ok
+test_mul_valid (__main__.TestMatrix.test_mul_valid) ... FAIL
+test_properties (__main__.TestMatrix.test_properties) ... ok
+test_set_valid (__main__.TestMatrix.test_set_valid) ... ok
+
+======================================================================
+FAIL: test_add_valid (__main__.TestMatrix.test_add_valid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sergilenyouvop/INF1007/ch11-3-Sn-goat/test_exercice.py", line 92, in test_add_valid
+    self.assertEqual(output, expected)
+AssertionError: Matrix(2, 3, [1111, 1212, 1313, 2121, 2222, 2323]) != Matrix(2, 3, [1111, 1212, 1313, 2121, 2222, 2323])
+
+======================================================================
+FAIL: test_mul_valid (__main__.TestMatrix.test_mul_valid)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/sergilenyouvop/INF1007/ch11-3-Sn-goat/test_exercice.py", line 102, in test_mul_valid
+    self.assertEqual(output, expected)
+AssertionError: Matrix(2, 2, [776.0, 812.0, 1406.0, 1472.0]) != Matrix(2, 2, [776, 812, 1406, 1472])
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=2)

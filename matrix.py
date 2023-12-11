@@ -96,25 +96,26 @@ class Matrix:
 	# TODO: Représentation affichable (conversion pour print)
 	def __str__(self):
 		# TODO: Chaque rangée est sur une ligne, avec chaque élément séparé d'un espace.
+		matrix = self.copy()
 		n=0
 		for i in range(len(self)):
-			if (i % self.width) == 0:
-				self.data.insert(i+n, "\n")
+			if (i % matrix.width) == 0:
+				matrix.data.insert(i+n, "\n")
 				n+=1
 
-		matrix = " ".join(map(str, self.data))
+		data_matrix = " ".join(map(str, matrix.data))
 
-		return matrix
+		return data_matrix
 
 	# TODO: Représentation officielle
-	def TODO(TODO):
-		# TODO: une string qui représente une expression pour construire l'objet.
-		pass
+	def __repr__(self):
+		return f"Matrix({self.height}, {self.width}, {self.data})"
 
 	# TODO: String formatée
-	def TODO(TODO):
+	def __format__(self, format):
 		# TODO: On veut pouvoir dir comment chaque élément doit être formaté en passant la spécification de formatage qu'on passerait à `format()`
-		pass
+		new_data = [f"{num:{format}}" for num in self.data]
+		return str(Matrix(self.height, self.width, new_data))
 
 	def clone(self):
 		return Matrix(self.height, self.width, self.data)
@@ -137,40 +138,63 @@ class Matrix:
 		return self.copy()
 
 	# TODO: Négation
-	def TODO(TODO):
-		pass
+	def __neg__(self):
+		new_data = list(map(lambda x: -x, self.data))
+		return Matrix(self.height, self.width, new_data)
 
 	# TODO: Addition
-	def TODO(TODO):
+	def __add__(self, other):
+		if isinstance(other, Matrix):
+
+			if (self.width == other.width) and (self.height == other.height):
+				new_data = list(map(lambda x,y : x + y, self.data, other.data))
+			else:
+				raise IncompatibleOperandsError(f"{other.height}, {other.width}")
+		else:
+			raise TypeError(type(other))
 		# TODO: D'abord vérifier que les opérandes ont les mêmes dimensions. Sinon, on lève un IncompatibleOperandsError.
 		# TODO: Retourner le résultat de l'addition
-		pass
+		return Matrix(self.height, self.width, new_data)
 	
 	# TODO: Soustraction (n'oubliez pas qu'on a déjà l'opérateur de négation et d'addition)
-	def TODO(TODO):
-		pass
+	def __sub__(self, other):
+		return self + (-other)
 	
 	# TODO: Multiplication matricielle/scalaire
-	def TODO(TODO):
+	def __mul__(self, other):
 		if isinstance(other, Matrix):
 			# TODO: D'abord vérifier que les opérandes on des dimensions compatibles. Sinon on lève un IncompatibleOperandsError.
+			if self.width == other.height:
 			# TODO: Multiplication matricielle.
-			# Rappel de l'algorithme simple pour C = A * B, où A, B sont matrices compatibles (hauteur_A = largeur_B)
-			# C = Matrice(hauteur_A, largeur_B)
+				C = Matrix(self.height, other.width)
 			# Pour i dans [0, hauteur_C[
 				# Pour j dans [0, largeur_C[
 					# Pour k dans [0, largeur_A[
 						# C(i, j) = A(i, k) * B(k, j)
-			pass
+				for i in range(C.height):
+					for j in range(C.width):
+						for k in range(self.width):
+							C[i,j] += self[i,k] * other[k,j]
+				return C
+							
+
 		elif isinstance(other, numbers.Number):
 			# TODO: Multiplication scalaire.
-			pass
+			new_data = list(map(lambda x: x * other, self.data))
+			return Matrix(self.height, self.width, new_data)
+
 		else:
 			raise TypeError(type(other))
 
 	# TODO: Multiplication scalaire avec le scalaire à gauche
-	def TODO(TODO):
-		pass
+	def __rmul__(self, other):
+		if isinstance(other, numbers.Number):
+			# TODO: Multiplication scalaire.
+			new_data = list(map(lambda x: x * other, self.data))
+			return Matrix(self.height, self.width, new_data)
+
+		else:
+			raise TypeError(type(other))
 
 	def __abs__(self):
 		return Matrix(self.height, self.width, [abs(e) for e in self.data])
